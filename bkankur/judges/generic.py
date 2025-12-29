@@ -17,6 +17,7 @@ Notes (production):
   will still catch bad output.
 """
 
+import os
 from typing import Any, Dict, Optional
 
 from .openai_compatible_chat import OpenAICompatibleChatJudge
@@ -31,19 +32,29 @@ class GenericOpenAIJudge(OpenAICompatibleChatJudge):
         self,
         model: str,
         base_url: str,
-        api_key: str,
-        timeout_s: float = 30.0,
+        api_key: Optional[str] = None,
+        timeout_s: float = 45.0,
         retries: int = 0,
         retry_backoff_s: float = 1.0,
     ) -> None:
+        # Allow clean developer code: api_key=None and use env vars
+        resolved_key = api_key or os.getenv("BKANKUR_API_KEY") or os.getenv("OPENAI_API_KEY")
+        if not resolved_key:
+            raise RuntimeError(
+                "Missing API key. Set BKANKUR_API_KEY or OPENAI_API_KEY or pass api_key=..."
+            )
+
         super().__init__(
-            api_key=api_key,
+            api_key=resolved_key,
             model=model,
             base_url=base_url,
             timeout_s=timeout_s,
             retries=retries,
             retry_backoff_s=retry_backoff_s,
         )
+
+        # Optional: keep for debugging/printing (parent may already store it)
+        self.api_key = resolved_key
 
     def judge(
         self,

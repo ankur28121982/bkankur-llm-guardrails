@@ -25,8 +25,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/<your_org>/<your_repo>"
-Issues = "https://github.com/<your_org>/<your_repo>/issues"
+Homepage = "https://github.com/ankur28121982/bkankur-llm-guardrails/"
+Issues = "ankur1122@gmail.com"
 
 [tool.setuptools]
 include-package-data = true
@@ -34,3 +34,4 @@ include-package-data = true
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["bkankur*"]
+

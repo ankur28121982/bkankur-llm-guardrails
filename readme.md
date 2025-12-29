@@ -10,7 +10,7 @@ pip install bkankur
 
 
 
-----------------------------sample code------------------------------------
+----------------------------sample code 1------------------------------------
 import os
 from bkankur import BKAnkurEvaluator, Transaction
 from bkankur.judges.generic import GenericOpenAIJudge
@@ -31,3 +31,11 @@ tx = Transaction(
 
 report = evaluator.evaluate(tx)
 print(report.pretty())
+
+----------------------------sample code 2------------------------------------
+
+set OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxx
+
+python -c "import os; from bkankur import BKAnkurEvaluator, Transaction; from bkankur.judges.generic import GenericOpenAIJudge; j=GenericOpenAIJudge(model='gpt-4o-mini', base_url='https://api.openai.com/v1', api_key=os.environ['OPENAI_API_KEY']); e=BKAnkurEvaluator(judge=j); tx=Transaction(user_text='How can I reset my password?', bot_text='Go to Settings → Account → Reset Password. If you forgot it, use Forgot Password on login screen.'); r=e.evaluate(tx); print(r.pretty())"
+
+<img width="1587" height="453" alt="image" src="https://github.com/user-attachments/assets/3359218c-4497-454d-93c4-2f8bd2cec754" />
